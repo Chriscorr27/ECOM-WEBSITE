@@ -1,0 +1,127 @@
+{%  extends 'base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="total-orders">
+			  	<div class="card-header">
+                      <h5 class="card-title">Total Orders</h5>
+                      
+			  	</div>
+			  	<div class="card-body">
+			    	<h4 class="card-title">{{total.total_order}}</h4>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="orders-delivered">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Orders Delivered</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h4 class="card-title">{{total.total_delivered}}</h4>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="orders-pending">
+			  	<div class="card-header">
+			  		<h5 class="card-title">Orders Pending</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h4 class="card-title">{{total.total_pending}}</h4>
+			  	</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md-5">
+		<h5 class="ml-5">CUSTOMERS:</h5>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>Customer</th>
+					<th class="text-center">Email-Address</th>
+				</tr>
+				{% if user_no == 2 %}
+					{% for user in users %}
+						<tr>
+							<td><a class="btn btn-sm btn-info " href="{% url 'user_page' user.id %}">view</a></td>
+							<td class="pl-2">{{user.username}}</td>
+							<td class="pl-4">{{user.email}}</td>
+						</tr>
+					{% endfor %}
+				{% else %}
+				<tr>
+					<td><a class="btn btn-sm btn-info " href="{% url 'user_page' users.id %}">view</a></td>
+					<td class="pl-2">{{users.username}}</td>
+					<td class="pl-4">{{users.email}}</td>
+				</tr>
+				{% endif %}
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-7">
+		<h5 class="ml-4">LAST ORDERS</h5>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr>
+                    <th>Customer</th>
+					<th>Product</th>
+					<th>Date Orderd</th>
+					<th>Status</th>
+					
+					<th>Remove</th>
+				</tr>
+				{% if order_no == 2 %}
+					{% for item in orderitems %}
+						
+               	 		<tr>
+                    		<td>{{item.order.user}}</td>
+							<td>{{item.product}}</td>
+							<td>{{item.date_added}}</td>
+							<td>{{item.status}}</td>
+					
+							<td><button data-item="{{item.id}}"  class="btn btn-sm btn-danger remove">Remove</button></td>
+						</tr>
+						
+					{% endfor %}
+				{% else %}
+					<tr>
+						<td>chris27</td>
+						<td>headphone</td>
+						<td>may 08,2020,11:30 am</td>
+						<td>Pending</td>
+				
+						<td><button data-item="{{orderitems.id}}"  class="btn btn-sm btn-danger remove ">Remove</button></td>
+					</tr>
+				{% endif %}	
+						
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %}

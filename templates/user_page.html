@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+
+<div class="row">
+	
+	<div class="col-md-4">
+		<div class="card card-body">
+			<h5 class="ml-2">Customer Information</h5>
+			<hr>
+            <p class="ml-2 text-uppercase">Name: {{user_info.first_name}} {{user_info.last_name}}</p>
+            <p class="ml-2">Username: {{user_info.username}}</p>
+            <p class="ml-2">Email: {{user_info.email}}</p>
+            {% if user_info.is_superuser %}
+            <button  class="btn btn-sm btn-success ">Superuser Customer </button>
+            {% else %}
+            <button data-user="{{user_info.id}}" class="btn btn-sm btn-danger rcustomer">Delete Customer </button>
+            {% endif %}
+        </div>
+	</div>
+
+	<div class="col-md-8">
+		<div class="card card-body">
+			<div class="row">
+                <div class="col">
+                    <div class="col-md">
+                        <div class="card text-center text-white  mb-3" id="total-orders">
+                              <div class="card-header">
+                                  <h5 class="card-title">Total <br>Orders</h5>
+                                  
+                              </div>
+                              <div class="card-body">
+                                <h4 class="card-title">{{total.total_order}}</h4>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div class="col-md">
+                        <div class="card text-center text-white  mb-3" id="orders-delivered">
+                              <div class="card-header">
+                                  <h5 class="card-title">Orders Delivered</h5>
+                              </div>
+                              <div class="card-body">
+                                <h4 class="card-title">{{total.total_delivered}}</h4>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div class="col-md">
+                        <div class="card text-center text-white  mb-3" id="orders-pending">
+                              <div class="card-header">
+                                  <h5 class="card-title">Orders Pending</h5>
+                              </div>
+                              <div class="card-body">
+                                <h4 class="card-title">{{total.total_pending}}</h4>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<h3 class="text-center">Order Summary</h3>
+<br>
+
+
+<div class="row">
+	<div class="col-md-6">
+		<h5 class="ml-5">Pending Orders</h5>
+		<hr>
+		<div class="card card-body">
+			
+            <table class="table table-sm">
+				<tr>
+					<th>Product</th>
+					<th>Price</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Remove</th>
+                </tr>
+                {% for items in orderitems_pending %}
+                    {% for item in items %}
+                        <tr>
+                            <td>{{item.product.name}}</td>
+                            <td>${{item.product.price}}</td>
+                            <td>x{{item.quantity}}</td>
+                            <td>{{item.status}}</td>
+                            <td><button data-item="{{item.id}}" class="btn btn-sm btn-danger remove ">Remove</button></td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<h5 class="ml-4">Completed ORDERS</h5>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr>
+                    
+					<th>Product</th>
+					<th>Date Orderd</th>
+					<th>Quantity</th>
+					
+                </tr>
+                {% for items in orderitems_delivered %}
+                    {% for item in items %}
+                        <tr>
+                        
+                            <td>{{item.product.name}}</td>
+                            <td>{{item.date_added}}</td>
+                            
+                            <td class="text-center">x{{item.quantity}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+			</table>
+		</div>
+	</div>
+
+</div>
+
+<br>
+<br>
+<div class="container">
+	<div class="text-center">
+		<h5 class="text-center text-uppercase">order detail</h5>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr>
+                    <th>Customer</th>
+					<th>Tranction ID</th>
+					<th>Date Orderd</th>
+					<th>Status</th>
+					
+					<th>Remove</th>
+                </tr>
+                {% for order in orders %}
+                <tr>
+                    <td>{{order.user.username}}</td>
+					<td>{{order.transaction_id}}</td>
+					<td>{{order.date_ordered}}</td>
+					<td>{{order.status}}</td>
+					
+					<td><button data-order="{{order.id}}" class="btn btn-sm btn-danger rorder">Remove </button></td>
+				</tr>
+                {% endfor %}
+			</table>
+	</div>
+</div>
+
+{% endblock %}

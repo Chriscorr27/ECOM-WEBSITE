@@ -1,0 +1,47 @@
+{%load static%}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand brand " href="#"> EMKT</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link nav-text" href="{% url 'home' %}">Store </a>
+      </li>
+      {% if request.user.is_superuser %}
+      <li class="nav-item active">
+        <a class="nav-link nav-text" href="{% url 'dashboard' %}">Daseboard </a>
+      </li>
+      {% endif %}
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      {% if request.user.is_authenticated %}
+      <h4 class="mr-2 text-white">hello,{{request.user.first_name}}</h4>
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle text-white " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i> Account
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'profile' %}">MY Account</a>
+          <a class="dropdown-item" href="{% url 'myorder' %}">MY Order</a>
+          <a class="dropdown-item bg-warning" href="{% url 'logout' %}">LOGOUT</a>
+         </div> 
+         </div>
+      {% else %}
+       <a href="{% url 'login' %}"class="btn btn-warning">Login</a>
+      {%  endif %}
+       <a href="{% url 'cart' %}">
+        <img  id="cart-icon" src="{% static 'images/cart.png' %}">
+      </a>
+      {% if request.user.is_authenticated %}
+      <p id="cart-total">{{order.get_cart_items}}</p>
+      {% else %}
+      <p id="cart-total">0</p>
+      {%  endif %}
+    </div>
+  </div>
+</nav>
+{% endblock %}

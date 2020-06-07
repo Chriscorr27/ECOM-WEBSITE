@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+<h3 class="text-center">ACCOUNT</h3>
+<br>
+<img src="{% static 'images/placeholder.png' %}" class="rounded-circle img-thumbnail  mx-auto d-block" width="250" height="250" >
+<br>
+<div class="container text-center">
+<input type="text" class="text-center mr-2" placeholder="enter the file">
+<a class="btn btn-sm btn-success">Save</a>
+</div>
+
+<div class="container-fluid text-center p-5">
+    
+    <h4 class="ml-5 text-uppercase ">DETAILS</h4>
+    <hr>
+    <h4 class="ml-5 text-uppercase ">NAME : {{user.first_name}} {{user.last_name}}</h4>
+    <h4 class="ml-5 text-uppercase ">userNAME : {{user.username}}</h4>
+    <h4 class="ml-5 ">EMAIL : {{user.email}}</h4>
+    
+</div>
+{% endblock %}
